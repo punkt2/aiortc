@@ -485,9 +485,13 @@ class SessionDescription:
                     elif attr == "msid":
                         current_media.msid = value
                     elif attr == "rtcp":
-                        port, rest = value.split(" ", 1)
-                        current_media.rtcp_port = int(port)
-                        current_media.rtcp_host = ipaddress_from_sdp(rest)
+                        try:
+                            current_media.rtcp_port = int(value)
+                            current_media.rtcp_host = "0.0.0.0"
+                        except:
+                            port, rest = value.split(" ", 1)
+                            current_media.rtcp_port = int(port)
+                            current_media.rtcp_host = ipaddress_from_sdp(rest)
                     elif attr == "rtcp-mux":
                         current_media.rtcp_mux = True
                     elif attr == "setup":
